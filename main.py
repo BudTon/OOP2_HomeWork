@@ -23,6 +23,12 @@ class Mentor:
         else:
             return 'Ошибка'
 
+class Lecturer(Mentor):
+    pass
+
+class Reviewer(Mentor):
+    pass
+
 
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
@@ -32,6 +38,8 @@ best_student.courses_in_progress += ['Git']
 cool_mentor = Mentor('Some', 'Buddy')
 cool_mentor.courses_attached += ['Python']
 cool_mentor.courses_attached += ['Git']
+
+
 
 cool_mentor.rate_hw(best_student, 'Python', 10)
 cool_mentor.rate_hw(best_student, 'Git', 10)
