@@ -6,6 +6,14 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+    def rate_work_lect(self, lecturer, course, grade):
+        if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
+            if course in lecturer.grades:
+                lecturer.grades[course] += [grade]
+            else:
+                lecturer.grades[course] = [grade]
+        else:
+            return 'Ошибка'
 
 
 class Mentor:
@@ -13,7 +21,11 @@ class Mentor:
         self.name = name
         self.surname = surname
         self.courses_attached = []
+        self.grades = {}
 
+class Lecturer(Mentor):
+    pass
+class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
@@ -23,27 +35,39 @@ class Mentor:
         else:
             return 'Ошибка'
 
-class Lecturer(Mentor):
-    pass
-
-class Reviewer(Mentor):
-    pass
-
 
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
 best_student.courses_in_progress += ['Git']
 
-cool_mentor = Mentor('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
-cool_mentor.courses_attached += ['Git']
 
 
+some_reviewer = Reviewer('Some', 'Buddy')
+some_reviewer.courses_attached += ['Python']
+some_reviewer.courses_attached += ['Git']
 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Git', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-print(best_student.grades)
+some_lecturer = Lecturer('name Lecturer', 'surname Lecture')
+some_lecturer.courses_attached += ['Python']
+some_lecturer.courses_attached += ['Git']
+
+
+best_student.rate_work_lect(some_lecturer, 'Python', 10)
+best_student.rate_work_lect(some_lecturer, 'Git', 8)
+
+print(1)
+print(some_lecturer.grades, '- Оценки Лектору')
+print(2)
+print(some_lecturer.courses_attached, '- Курсы Лектора')
+print(3)
+print(some_lecturer.name, some_lecturer.surname)
+print(4)
+print(some_reviewer.name, some_reviewer.surname)
+print(some_reviewer.courses_attached)
+print(5)
+some_reviewer.rate_hw(best_student, 'Python', 10)
+some_reviewer.rate_hw(best_student, 'Git', 10)
+some_reviewer.rate_hw(best_student, 'Python', 10)
+some_reviewer.rate_hw(best_student, 'Python', 10)
+some_reviewer.rate_hw(best_student, 'Python', 10)
+print(best_student.name, best_student.grades)
